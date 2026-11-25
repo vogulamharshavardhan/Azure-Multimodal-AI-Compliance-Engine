@@ -1,0 +1,41 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python and tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Runtime data and logs
+logs/
+*.log
+*.mp4
+*.mkv
+*.mov
+*.webm
+.tmp/
+tmp/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+backend/evaluation/reports/*.json
+backend/evaluation/reports/*.md
+
+# Local audit artifacts may contain private video evidence.
+audit_job.json
+audit_result.json
