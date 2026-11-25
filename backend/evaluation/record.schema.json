@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Brand Guardian human-reviewed evaluation record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "expected",
+    "predicted"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "string"
+    },
+    "expected": {
+      "$ref": "#/$defs/assessment"
+    },
+    "predicted": {
+      "$ref": "#/$defs/assessment"
+    }
+  },
+  "$defs": {
+    "assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision"
+      ],
+      "properties": {
+        "decision": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "REVIEW_REQUIRED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "applicability": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "APPLICABLE",
+              "NOT_APPLICABLE",
+              "UNCERTAIN"
+            ]
+          }
+        },
+        "requirement_statuses": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "COMPLIANT",
+              "NON_COMPLIANT",
+              "INSUFFICIENT_EVIDENCE",
+              "NOT_EVALUATED"
+            ]
+          }
+        },
+        "relevant_chunk_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "supported_claim_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "valid_citation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "grounded_claim_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "citation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "decision_probabilities": {
+          "type": "object",
+          "properties": {
+            "PASS": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "FAIL": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "REVIEW_REQUIRED": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "NOT_APPLICABLE": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  }
+}

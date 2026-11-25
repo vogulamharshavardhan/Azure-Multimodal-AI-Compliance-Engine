@@ -1,0 +1,117 @@
+{
+  "applicability": {
+    "count": 0,
+    "note": "No aligned labels supplied."
+  },
+  "calibration": {
+    "evaluated_cases": 0,
+    "note": "No decision_probabilities supplied."
+  },
+  "citations": {
+    "evaluated_cases": 0,
+    "f1": 0.0,
+    "false_negative": 0,
+    "false_positive": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "true_positive": 0
+  },
+  "dataset": {
+    "cases": 4,
+    "unique_case_ids": 4
+  },
+  "decision": {
+    "accuracy": 1.0,
+    "accuracy_95pct_wilson_ci": [
+      0.5101,
+      1.0
+    ],
+    "confusion_matrix": {
+      "FAIL": {
+        "FAIL": 1,
+        "NOT_APPLICABLE": 0,
+        "PASS": 0,
+        "REVIEW_REQUIRED": 0
+      },
+      "NOT_APPLICABLE": {
+        "FAIL": 0,
+        "NOT_APPLICABLE": 1,
+        "PASS": 0,
+        "REVIEW_REQUIRED": 0
+      },
+      "PASS": {
+        "FAIL": 0,
+        "NOT_APPLICABLE": 0,
+        "PASS": 0,
+        "REVIEW_REQUIRED": 0
+      },
+      "REVIEW_REQUIRED": {
+        "FAIL": 0,
+        "NOT_APPLICABLE": 0,
+        "PASS": 0,
+        "REVIEW_REQUIRED": 2
+      }
+    },
+    "count": 4,
+    "false_fail_count": 0,
+    "false_fail_rate_among_gold_non_fail": 0.0,
+    "false_pass_count": 0,
+    "false_pass_rate_95pct_wilson_ci": [
+      0.0,
+      0.4899
+    ],
+    "false_pass_rate_among_gold_non_pass": 0.0,
+    "gold_non_fail_cases": 3,
+    "gold_non_pass_cases": 4,
+    "macro_f1_present_classes": 1.0,
+    "per_class": {
+      "FAIL": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 1
+      },
+      "NOT_APPLICABLE": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 1
+      },
+      "PASS": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 0
+      },
+      "REVIEW_REQUIRED": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 2
+      }
+    }
+  },
+  "evidence_grounding": {
+    "evaluated_cases": 0,
+    "f1": 0.0,
+    "false_negative": 0,
+    "false_positive": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "true_positive": 0
+  },
+  "limitations": [
+    "Metrics are only as reliable as the human-reviewed gold labels.",
+    "Missing optional labels are excluded from that metric, not counted as correct.",
+    "A zero false-PASS count on a finite benchmark does not prove zero real-world risk.",
+    "Review thresholds must be calibrated on representative, independently labelled data."
+  ],
+  "requirement_status": {
+    "count": 0,
+    "note": "No aligned labels supplied."
+  },
+  "retrieval": {
+    "evaluated_cases": 0,
+    "note": "No relevant_chunk_ids supplied."
+  }
+}

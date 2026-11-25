@@ -1,0 +1,72 @@
+[1mdiff --git a/backend/src/auditing/evidence.py b/backend/src/auditing/evidence.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..71a8ea9[m
+[1m--- /dev/null[m
+[1m+++ b/backend/src/auditing/evidence.py[m
+[36m@@ -0,0 +1,66 @@[m
+[32m+[m[32m"""Bounded evidence selection; prioritize disclosure candidates before truncation."""[m
+[32m+[m[32mimport json[m
+[32m+[m[32mimport re[m
+[32m+[m
+[32m+[m[32mDISCLOSURE = re.compile(r'\b(?:sponsor(?:ed|ship|s)?|paid\s+(?:partnership|promotion|advertisement|for|by)|advertisement|affiliate|gifted|ad|partner(?:ship)?|provided\s+by)\b', re.I)[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef all_records(state):[m
+[32m+[m[32m    records = {}[m
+[32m+[m[32m    for modality, key, fallback in [('TRANSCRIPT','transcript_segments','transcript'), ('OCR','ocr_segments','ocr_text')]:[m
+[32m+[m[32m        segments = state.get(key) or (state.get('raw_ocr_segments') if modality == 'OCR' else None) or [][m
+[32m+[m[32m        if not segments and state.get(fallback):[m
+[32m+[m[32m            segments = [{'text': str(state[fallback])}][m
+[32m+[m[32m        for i, segment in enumerate(segments):[m
+[32m+[m[32m            if not isinstance(segment, dict) or not str(segment.get('text','')).strip():[m
+[32m+[m[32m                continue[m
+[32m+[m[32m            eid = f'{modality}_{i+1:04d}'[m
+[32m+[m[32m            records[eid] = {'evidence_id':eid,'modality':modality,'text':str(segment['text']), 'start':segment.get('start',segment.get('start_time')), 'end':segment.get('end',segment.get('end_time'))}[m
+[32m+[m[32m    # Preserve raw OCR candidates that cleaning may have removed. Keep separate IDs.[m
+[32m+[m[32m    existing = {(r['text'], str(r['start']), str(r['end'])) for r in records.values() if r['modality']=='OCR'}[m
+[32m+[m[32m    for i, segment in enumerate(state.get('raw_ocr_segments') or []):[m
+[32m+[m[32m        if not isinstance(segment, dict) or not DISCLOSURE.search(str(segment.get('text',''))):[m
+[32m+[m[32m            continue[m
+[32m+[m[32m        start, end = segment.get('start',segment.get('start_time')), segment.get('end',segment.get('end_time'))[m
+[32m+[m[32m        key = (str(segment['text']),str(start),str(end))[m
+[32m+[m[32m        if key not in existing:[m
+[32m+[m[32m            eid = f'OCR_RAW_{i+1:04d}'[m
+[32m+[m[32m            records[eid] = {'evidence_id':eid,'modality':'OCR','text':key[0],'start':start,'end':end}[m
+[32m+[m[32m            existing.add(key)[m
+[32m+[m[32m    return records[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef candidates(records):[m
+[32m+[m[32m    return [k for k,v in records.items() if DISCLOSURE.search(v['text'])][m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef build_catalog(state, budget=18000, domain='ADVERTISING_DISCLOSURES'):[m
+[32m+[m[32m    full = all_records(state)[m
+[32m+[m[32m    keys = list(full)[m
+[32m+[m[32m    priority = set(candidates(full)) if domain == 'ADVERTISING_DISCLOSURES' else set()[m
+[32m+[m[32m    # Include adjacent records in the same modality, e.g. sponsor name on next OCR line.[m
+[32m+[m[32m    nearby = {keys[j] for i,k in enumerate(keys) if k in priority for j in (i-1,i+1) if 0 <= j < len(keys) and keys[j].split('_')[0] == k.split('_')[0]}[m
+[32m+[m[32m    ordered = sorted(keys, key=lambda k: 0 if k in priority else 1 if k in nearby else 2)[m
+[32m+[m[32m    records = {}; used = 0[m
+[32m+[m[32m    for eid in ordered:[m
+[32m+[m[32m        record = full[eid][m
+[32m+[m[32m        size = len(json.dumps(record, ensure_ascii=False, default=str)) + 10[m
+[32m+[m[32m        if used + size <= budget:[m
+[32m+[m[32m            records[eid] = record; used += size[m
+[32m+[m[32m    return records, len(full)-len(records)[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef resolve_ids(ids, catalog):[m
+[32m+[m[32m    accepted, rejected = [], 0[m
+[32m+[m[32m    for eid in dict.fromkeys(ids):[m
+[32m+[m[32m        if eid in catalog:[m
+[32m+[m[32m            accepted.append({**catalog[eid], 'verified':True})[m
+[32m+[m[32m        else:[m
+[32m+[m[32m            rejected += 1[m
+[32m+[m[32m    return accepted, rejected[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef absence_observation(state, omitted):[m
+[32m+[m[32m    extraction = state.get('extraction_status') or {}[m
+[32m+[m[32m    found = candidates(all_records(state))[m
+[32m+[m[32m    return {'status':'POTENTIAL_DISCLOSURE_DETECTED' if found else 'NOT_DETECTED_IN_EXTRACTED_EVIDENCE', 'candidate_count':len(found), 'transcription_status':extraction.get('transcription_status'), 'ocr_status':extraction.get('ocr_status'), 'omitted_segments':omitted, 'absence_verified':False, 'limitation':'OCR and transcript extraction cannot establish absence throughout the original audio/video; manual review required.'}[m

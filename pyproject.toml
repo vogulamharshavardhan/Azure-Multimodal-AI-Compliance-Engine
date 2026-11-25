@@ -1,0 +1,43 @@
+[project]
+name = "complianceqapipeline"
+version = "0.1.0"
+description = "Evidence-grounded YouTube advertising compliance QA pipeline"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "azure-identity>=1.27.0",
+    "azure-monitor-opentelemetry>=1.8.12",
+    "azure-search-documents>=12.1.0",
+    "azure-storage-blob>=12.31.1",
+    "fastapi>=0.165.0",
+    "firecrawl-py>=4.57.0",
+    "grandalf>=0.8",
+    "langchain>=1.5.2",
+    "langchain-community>=0.4.2",
+    "langchain-openai>=1.8.5",
+    "langchain-text-splitters>=1.1.3",
+    "langgraph>=1.2.24",
+    "langsmith>=0.16.0",
+    "opentelemetry-instrumentation-fastapi>=0.66b2",
+    "pandas>=3.1.1",
+    "psycopg2-binary>=2.9.13",
+    "pydantic>=2.14.4",
+    "pypdf>=7.1.1",
+    "python-dotenv>=1.2.4",
+    "redis>=8.1.0",
+    "requests>=2.34.2",
+    "requests-toolbelt>=1.0.0",
+    "sqlalchemy>=2.1.9",
+    "streamlit>=1.67.0",
+    "uvicorn>=0.54.0",
+    "yt-dlp>=2026.10.26",
+    "yt-dlp-ejs==0.8.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

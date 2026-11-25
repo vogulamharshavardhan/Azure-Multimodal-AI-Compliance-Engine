@@ -1,0 +1,4 @@
+{"case_id": "screening-pass-blocked", "notes": "Synthetic decision guard only; no video or LLM evaluation.", "expected": {"decision": "REVIEW_REQUIRED"}, "predicted": {"decision": "REVIEW_REQUIRED"}}
+{"case_id": "known-screening-failure", "notes": "Synthetic decision guard only; no video or LLM evaluation.", "expected": {"decision": "FAIL"}, "predicted": {"decision": "FAIL"}}
+{"case_id": "unresolved-evidence", "notes": "Synthetic decision guard only; no video or LLM evaluation.", "expected": {"decision": "REVIEW_REQUIRED"}, "predicted": {"decision": "REVIEW_REQUIRED"}}
+{"case_id": "outside-supported-scope", "notes": "Synthetic decision guard only; no video or LLM evaluation.", "expected": {"decision": "NOT_APPLICABLE"}, "predicted": {"decision": "NOT_APPLICABLE"}}
