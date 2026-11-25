@@ -1,0 +1,12 @@
+{
+  "version": "draft-1",
+  "approval_status": "UNREVIEWED",
+  "exhaustive": false,
+  "note": "Planning inventory only. The bundled snapshots do not establish exhaustive policy coverage. Do not use this file to authorize PASS.",
+  "requirements": [
+    {"id":"FTC-001","domain":"ADVERTISING_DISCLOSURES","condition":"Unexpected material connection in an endorsement within FTC scope","check":"Clear and conspicuous disclosure of material connection","source":"ftc-endorsement-guides-faq.md","evaluator":"SEMANTIC"},
+    {"id":"FTC-002","domain":"ADVERTISING_DISCLOSURES","condition":"Video endorsement requiring disclosure","check":"Disclosure appears in video; clarity and placement require contextual review","source":"ftc-endorsement-guides-faq.md","evaluator":"SEMANTIC"},
+    {"id":"YT-001","domain":"YOUTUBE_AD_SPECIFICATIONS","condition":"Confirmed paid ad and known campaign format","check":"Format-specific duration and creative rules","source":"google-ads-youtube-video-specs.md","evaluator":"DETERMINISTIC_AFTER_RULE_VERIFICATION"},
+    {"id":"YT-002","domain":"YOUTUBE_AD_SPECIFICATIONS","condition":"Confirmed paid ad and original creative asset available","check":"Original asset file size, dimensions, format and audio/video streams against verified specification","source":"google-ads-youtube-video-specs.md","evaluator":"DETERMINISTIC_AFTER_RULE_VERIFICATION"}
+  ]
+}
