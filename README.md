@@ -12,7 +12,7 @@ Brand Guardian extracts timestamped transcripts and on-screen text from YouTube 
 ## System Architecture
 
 <p align="center">
-  <img src="./docs/images/azure_multimodal_compliance_architecture.png"
+  <img src="./docs/screenshots/azure_multimodal_compliance_architecture.png"
        alt="Azure Multi-Modal Compliance Orchestration Engine using LangGraph and LangSmith"
        width="100%">
 </p>
