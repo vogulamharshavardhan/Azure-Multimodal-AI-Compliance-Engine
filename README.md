@@ -9,6 +9,13 @@ Brand Guardian extracts timestamped transcripts and on-screen text from YouTube 
 **Status:** locally deployed with live Azure integrations. US-focused policy corpus; not a regulatory clearance or legal advice system.
 
 [Architecture](#architecture) · [Quick start](#quick-start) · [API](#api) · [Validation](#validation) · [Documentation](#documentation)
+## System Architecture
+
+<p align="center">
+  <img src="./docs/images/azure_multimodal_compliance_architecture.png"
+       alt="Azure Multi-Modal Compliance Orchestration Engine using LangGraph and LangSmith"
+       width="100%">
+</p>
 
 ## Overview
 
