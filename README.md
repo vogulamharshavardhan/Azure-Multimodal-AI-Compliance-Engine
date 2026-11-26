@@ -221,9 +221,4 @@ pyproject.toml
 | [Demonstration](docs/DEMONSTRATION.md) | Walkthrough and screenshot guide |
 | [Release notes](docs/RELEASE_NOTES.md) | V2.2 scope and changes |
 
-## Limitations and security
-
-- The draft policy registry is unreviewed; coverage is not independently verified. Human review remains mandatory for inconclusive findings.
-- The latest run had three inconclusive requirements and empty requirement-level supporting-evidence arrays despite preserved disclosure candidates. Requirement IDs/counts varied across runs.
-- Model accuracy, retrieval recall, concurrent load, crash recovery and security have not been independently benchmarked. Azure AI dependency failures require diagnosis.
 
